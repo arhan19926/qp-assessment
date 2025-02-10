@@ -29,5 +29,6 @@ export const datasourceOptions: DataSourceOptions = {
 export const connectDb = new DataSource(datasourceOptions);
 connectDb
   .initialize()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   .then((data) => console.log('Datasource Intitatilised!!!'))
   .catch((e) => console.log(e));

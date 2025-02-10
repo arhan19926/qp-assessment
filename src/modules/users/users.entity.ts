@@ -1,5 +1,6 @@
+import { Orders } from 'src/modules/orders/orders.entity';
 import { baseEntity } from 'src/utility/baseEntity';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany } from 'typeorm';
 
 @Entity()
 export class User extends baseEntity {
@@ -17,4 +18,8 @@ export class User extends baseEntity {
 
   @Column({ unique: true })
   email: string;
+
+  @OneToMany(() => Orders, (order) => order.user, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'order_id' })
+  order: Orders[];
 }
