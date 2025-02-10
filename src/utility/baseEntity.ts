@@ -8,8 +8,8 @@ import {
 } from 'typeorm';
 
 export class baseEntity extends BaseEntity {
-  @PrimaryGeneratedColumn('increment')
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @CreateDateColumn({
     type: 'timestamptz',

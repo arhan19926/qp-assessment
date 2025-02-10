@@ -18,7 +18,7 @@ export const datasourceOptions: DataSourceOptions = {
   logging: true,
   migrations: [join(__dirname, '../migration/*{.ts,.js}')],
   migrationsRun: false,
-  synchronize: false,
+  synchronize: true,
 
   extra: {
     ssl: {

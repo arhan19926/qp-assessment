@@ -6,11 +6,14 @@ export class Grocery extends baseEntity {
   @Column()
   name: string;
 
-  @Column()
-  price: string;
+  @Column('decimal', { precision: 10, scale: 2 })
+  price: number;
 
   @Column({ nullable: true })
   category: string;
+
+  @Column()
+  unit: string;
 
   @Column({ default: 1 })
   quantity: number;
