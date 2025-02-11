@@ -10,6 +10,7 @@ import {
 import { GroceryService } from './grocery.service';
 import { CreateGroceryItemDto } from 'src/modules/grocery/dto/CreateGroceryItem.dto';
 import { UpdateGroceryItemDto } from 'src/modules/grocery/dto/UpdateGroceryItem.dto';
+import { ManageInventoryDto } from 'src/modules/grocery/dto/ ManageInventory.dto';
 
 @Controller('grocery')
 export class GroceryController {
@@ -63,6 +64,25 @@ export class GroceryController {
     } catch (error) {
       console.log(
         `Error Occurred in Controller method updateItemDetails:${error?.message || 'unknown'}`,
+      );
+      throw new InternalServerErrorException(
+        error?.message || 'Unkown error Occured',
+      );
+    }
+  }
+
+  @Patch('manageInventory')
+  async manageInventory(@Body() manageInventoryDto: ManageInventoryDto) {
+    console.log(
+      `Received Request to Manage Inventory for grocery item ${manageInventoryDto.id}`,
+    );
+    try {
+      const result =
+        await this.groceryService.processManageInventory(manageInventoryDto);
+      return result;
+    } catch (error) {
+      console.log(
+        `Error Occurred in Controller method manageInventory:${error?.message || 'unknown'}`,
       );
       throw new InternalServerErrorException(
         error?.message || 'Unkown error Occured',
