@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   InternalServerErrorException,
   Patch,
@@ -54,7 +55,7 @@ export class GroceryController {
     @Body() updateGroceryItemDto: UpdateGroceryItemDto,
     @Query('id') id: string,
   ) {
-    console.log(`Received Request to Update grocery item ${id} details`);
+    console.log(`Received Request to Update grocery item with id: ${id} `);
     try {
       const result = await this.groceryService.processUpdateItemDetails(
         id,
@@ -83,6 +84,22 @@ export class GroceryController {
     } catch (error) {
       console.log(
         `Error Occurred in Controller method manageInventory:${error?.message || 'unknown'}`,
+      );
+      throw new InternalServerErrorException(
+        error?.message || 'Unkown error Occured',
+      );
+    }
+  }
+
+  @Delete('delete')
+  async removeItem(@Query('id') id: string) {
+    console.log(`Received Request to Remove Item with id: ${id}`);
+    try {
+      const result = await this.groceryService.processRemoveItem(id);
+      return result;
+    } catch (error) {
+      console.log(
+        `Error Occurred in Controller method removeItem:${error?.message || 'unknown'}`,
       );
       throw new InternalServerErrorException(
         error?.message || 'Unkown error Occured',

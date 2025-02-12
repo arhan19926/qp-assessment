@@ -112,4 +112,21 @@ export class GroceryService {
       throw error;
     }
   }
+
+  async processRemoveItem(id: string) {
+    try {
+      console.log(`Inside GroceryService method processRemoveItem`);
+      const item = await this.groceryRepository.findOne({ where: { id } });
+      if (!item) {
+        throw new NotFoundException(`Grocery item with ID ${id} not found`);
+      }
+      await this.groceryRepository.softDelete(id);
+      return { message: 'Grocery item deleted successfully' };
+    } catch (error) {
+      console.log(
+        `Error Occurred in Service method processRemoveItem:${error?.message || 'unknown'}`,
+      );
+      throw error;
+    }
+  }
 }
