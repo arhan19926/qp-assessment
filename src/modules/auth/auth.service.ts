@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto } from 'src/modules/users/dto/createUser.dto';
 import { UsersService } from 'src/modules/users/users.service';
 
@@ -11,6 +11,29 @@ export class AuthService {
       console.log(`Inside AuthService method processSignUp`);
       const result = this.userService.processAddUser(payload);
       return result;
+    } catch (error) {
+      console.log(
+        `Error Occurred in Service method processCreateItem:${error?.message || 'unknown'}`,
+      );
+      throw error;
+    }
+  }
+
+  async validateUser(email: string, password: string) {
+    try {
+      const user =
+        await this.userService.processGetUserForAuthentication(email);
+
+      if (!user) {
+        throw new UnauthorizedException('Invalid credentials');
+      }
+
+      const isPasswordValid = password === user.password;
+      if (!isPasswordValid) {
+        throw new UnauthorizedException('Invalid credentials');
+      }
+      delete user.password;
+      return user;
     } catch (error) {
       console.log(
         `Error Occurred in Service method processCreateItem:${error?.message || 'unknown'}`,

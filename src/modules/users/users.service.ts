@@ -40,4 +40,22 @@ export class UsersService {
       );
     }
   }
+
+  async processGetUserForAuthentication(email: string) {
+    try {
+      console.log(`Inside User Service Method processGetUserForAuthentication`);
+      const user = this.userRepository.findOne({
+        where: { email },
+        select: ['id', 'firstName', 'lastName', 'email', 'password'],
+      });
+      return user;
+    } catch (error) {
+      console.log(
+        `Error Occurred in Service method processGetUserForAuthentication:${error?.message || 'unknown'}`,
+      );
+      throw new InternalServerErrorException(
+        error?.message || 'Unkown error Occured',
+      );
+    }
+  }
 }

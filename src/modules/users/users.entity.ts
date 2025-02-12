@@ -2,6 +2,10 @@ import { Orders } from 'src/modules/orders/orders.entity';
 import { baseEntity } from 'src/utility/baseEntity';
 import { Column, Entity, JoinColumn, OneToMany } from 'typeorm';
 
+export enum ROLE {
+  USER = 'USER',
+  ADMIN = 'ADMIN',
+}
 @Entity()
 export class User extends baseEntity {
   @Column()
@@ -10,7 +14,7 @@ export class User extends baseEntity {
   @Column()
   lastName: string;
 
-  @Column()
+  @Column({ select: false })
   password: string;
 
   @Column({ default: '' })
@@ -18,6 +22,9 @@ export class User extends baseEntity {
 
   @Column({ unique: true })
   email: string;
+
+  @Column({ type: 'enum', enum: ROLE, default: ROLE.USER })
+  role: string;
 
   @OneToMany(() => Orders, (order) => order.user, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'order_id' })

@@ -1,4 +1,11 @@
-import { IsAlpha, IsAlphanumeric, IsEmail, IsNotEmpty } from 'class-validator';
+import {
+  IsAlpha,
+  IsAlphanumeric,
+  IsEmail,
+  IsEnum,
+  IsNotEmpty,
+} from 'class-validator';
+import { ROLE } from 'src/modules/users/users.entity';
 
 export class CreateUserDto {
   @IsAlpha()
@@ -15,4 +22,7 @@ export class CreateUserDto {
 
   @IsEmail()
   email: string;
+
+  @IsEnum(ROLE)
+  role: string = ROLE.USER;
 }
