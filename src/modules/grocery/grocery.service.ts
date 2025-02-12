@@ -5,6 +5,7 @@ import {
 import {
   BadRequestException,
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -127,6 +128,24 @@ export class GroceryService {
         `Error Occurred in Service method processRemoveItem:${error?.message || 'unknown'}`,
       );
       throw error;
+    }
+  }
+
+  async findGroceryItems(groceryIds: string[]) {
+    try {
+      console.log(`Inside Grocery Service Method findOne`);
+      const items = await this.groceryRepository
+        .createQueryBuilder('grocery')
+        .where('grocery.id IN (:...ids)', { ids: groceryIds })
+        .getMany();
+      return items;
+    } catch (error) {
+      console.log(
+        `Error Occurred in Grocery Service method findOne:${error?.message || 'unknown'}`,
+      );
+      throw new InternalServerErrorException(
+        error?.message || 'Unkown error Occured',
+      );
     }
   }
 }

@@ -58,4 +58,19 @@ export class UsersService {
       );
     }
   }
+
+  async findOne(userId: string) {
+    try {
+      console.log(`Inside User Service Method findOne`);
+      const user = await this.userRepository.findOne({ where: { id: userId } });
+      return user;
+    } catch (error) {
+      console.log(
+        `Error Occurred in user Service method findOne:${error?.message || 'unknown'}`,
+      );
+      throw new InternalServerErrorException(
+        error?.message || 'Unkown error Occured',
+      );
+    }
+  }
 }
