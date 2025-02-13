@@ -1,13 +1,18 @@
-FROM node:18-alpine
+FROM node:20-alpine
 
 WORKDIR /app
 
-COPY ./ ./ 
+COPY package*.json ./
 
-RUN npm install --only=production
+RUN npm install
 
+COPY . .
 
-# Expose the application port (change if needed)
+RUN npm run build
+
 EXPOSE 3001
 
+# Start the application
 CMD ["npm", "run", "start:prod"]
+
+

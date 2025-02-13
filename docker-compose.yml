@@ -1,0 +1,27 @@
+services:
+  app:
+    build: .
+    container_name: qa-assessment-app
+    restart: always
+    ports:
+      - "3001:3001"
+    env_file:
+      - .env
+    depends_on:
+      - database
+
+  database:
+    image: postgres:15
+    container_name: postgres-db
+    restart: always
+    environment:
+      POSTGRES_USER: neondb_owner
+      POSTGRES_PASSWORD: npg_3zPgZeHnLr2o
+      POSTGRES_DB: neondb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

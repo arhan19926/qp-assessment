@@ -5,9 +5,9 @@ import {
   Post,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateUserDto } from 'src/modules/users/dto/createUser.dto';
-import { SignInDto } from 'src/modules/auth/dto/signIn.dto';
-import { Public } from 'src/modules/auth/decorators/Public.decorator';
+import { CreateUserDto } from '../users/dto/createUser.dto';
+import { SignInDto } from './dto/SignIn.dto';
+import { Public } from './decorators/Public.decorator';
 
 @Controller('auth')
 export class AuthController {
