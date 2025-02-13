@@ -46,7 +46,7 @@ export class UsersService {
       console.log(`Inside User Service Method processGetUserForAuthentication`);
       const user = this.userRepository.findOne({
         where: { email },
-        select: ['id', 'firstName', 'lastName', 'email', 'password'],
+        select: ['id', 'firstName', 'lastName', 'email', 'password', 'role'],
       });
       return user;
     } catch (error) {

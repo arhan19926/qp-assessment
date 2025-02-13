@@ -1,10 +1,15 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto } from 'src/modules/users/dto/createUser.dto';
 import { UsersService } from 'src/modules/users/users.service';
-
+import { JwtService } from '@nestjs/jwt';
+import { config } from 'dotenv';
+config();
 @Injectable()
 export class AuthService {
-  constructor(private readonly userService: UsersService) {}
+  constructor(
+    private jwtService: JwtService,
+    private readonly userService: UsersService,
+  ) {}
 
   async processSignUp(payload: CreateUserDto) {
     try {
@@ -19,8 +24,9 @@ export class AuthService {
     }
   }
 
-  async validateUser(email: string, password: string) {
+  async getToken(email: string, password: string) {
     try {
+      console.log(`Inside AuthService method getToken`);
       const user =
         await this.userService.processGetUserForAuthentication(email);
 
@@ -33,13 +39,55 @@ export class AuthService {
         throw new UnauthorizedException('Invalid credentials');
       }
       delete user.password;
-      return user;
+
+      const token = {
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        role: user.role,
+      };
+
+      const jwt = this.jwtService.signAsync(token, {
+        secret: process.env.JWT_SECRET,
+      });
+
+      return jwt;
     } catch (error) {
       console.log(
-        `Error Occurred in Service method processCreateItem:${error?.message || 'unknown'}`,
+        `Error Occurred in Service method getToken:${error?.message || 'unknown'}`,
+      );
+      throw error;
+    }
+  }
+
+  async processSignIn(email: string, password: string) {
+    try {
+      console.log(`Inside AuthService method processSignIn`);
+      const userToken = await this.getToken(email, password);
+
+      return userToken;
+    } catch (error) {
+      console.log(
+        `Error Occurred in Service method processSignIn:${error?.message || 'unknown'}`,
+      );
+      throw error;
+    }
+  }
+
+  async validate(token: string) {
+    try {
+      console.log(`Inside AuthService method validate`);
+      console.log(token);
+      const userToken = await this.jwtService.verifyAsync(token, {
+        secret: process.env.JWT_SECRET,
+      });
+      return userToken;
+    } catch (error) {
+      console.log(
+        `Error Occurred in Service method validate:${error?.message || 'unknown'}`,
       );
       throw error;
     }
   }
 }
-//add global auth guard ,add RBAC ,Add order API in which multiple items can be clubbed,containerize with docker

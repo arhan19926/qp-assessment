@@ -12,6 +12,8 @@ import { GroceryService } from './grocery.service';
 import { CreateGroceryItemDto } from 'src/modules/grocery/dto/CreateGroceryItem.dto';
 import { UpdateGroceryItemDto } from 'src/modules/grocery/dto/UpdateGroceryItem.dto';
 import { ManageInventoryDto } from 'src/modules/grocery/dto/ ManageInventory.dto';
+import { Role } from 'src/modules/auth/decorators/Roles.decorator';
+import { ROLE } from 'src/modules/users/users.entity';
 
 @Controller('grocery')
 export class GroceryController {
@@ -33,6 +35,7 @@ export class GroceryController {
     }
   }
 
+  @Role(ROLE.ADMIN)
   @Post('add')
   async createItem(@Body() createGroceryItemDto: CreateGroceryItemDto) {
     console.log(`Received Request to Create grocery item`);
@@ -50,6 +53,7 @@ export class GroceryController {
     }
   }
 
+  @Role(ROLE.ADMIN)
   @Patch('update')
   async updateItemDetails(
     @Body() updateGroceryItemDto: UpdateGroceryItemDto,
@@ -72,6 +76,7 @@ export class GroceryController {
     }
   }
 
+  @Role(ROLE.ADMIN)
   @Patch('manageInventory')
   async manageInventory(@Body() manageInventoryDto: ManageInventoryDto) {
     console.log(
@@ -91,6 +96,7 @@ export class GroceryController {
     }
   }
 
+  @Role(ROLE.ADMIN)
   @Delete('delete')
   async removeItem(@Query('id') id: string) {
     console.log(`Received Request to Remove Item with id: ${id}`);

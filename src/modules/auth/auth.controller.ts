@@ -6,6 +6,8 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from 'src/modules/users/dto/createUser.dto';
+import { SignInDto } from 'src/modules/auth/dto/signIn.dto';
+import { Public } from 'src/modules/auth/decorators/Public.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -20,6 +22,26 @@ export class AuthController {
     } catch (error) {
       console.log(
         `Error Occurred in Controller method signUp:${error?.message || 'unknown'}`,
+      );
+      throw new InternalServerErrorException(
+        error?.message || 'Unkown error Occured',
+      );
+    }
+  }
+
+  @Public()
+  @Post('signIn')
+  async signIn(@Body() signInDto: SignInDto) {
+    try {
+      console.log(`Received Request for User Sign In`);
+      const result = await this.authService.processSignIn(
+        signInDto.email,
+        signInDto.password,
+      );
+      return result;
+    } catch (error) {
+      console.log(
+        `Error Occurred in Controller method signIn:${error?.message || 'unknown'}`,
       );
       throw new InternalServerErrorException(
         error?.message || 'Unkown error Occured',
