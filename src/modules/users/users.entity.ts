@@ -1,5 +1,5 @@
-import { Orders } from 'src/modules/orders/orders.entity';
-import { baseEntity } from 'src/utility/baseEntity';
+import { Orders } from '../orders/orders.entity';
+import { baseEntity } from '../../utility/baseEntity';
 import { Column, Entity, JoinColumn, OneToMany } from 'typeorm';
 
 export enum ROLE {

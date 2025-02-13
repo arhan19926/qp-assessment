@@ -1,6 +1,6 @@
-import { Grocery } from 'src/modules/grocery/grocery.entity';
-import { User } from 'src/modules/users/users.entity';
-import { baseEntity } from 'src/utility/baseEntity';
+import { Grocery } from '../grocery/grocery.entity';
+import { User } from '../users/users.entity';
+import { baseEntity } from '../../utility/baseEntity';
 import { Column, Entity, JoinTable, ManyToMany, ManyToOne } from 'typeorm';
 
 export enum OrderStatus {

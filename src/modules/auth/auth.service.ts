@@ -1,6 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { CreateUserDto } from 'src/modules/users/dto/createUser.dto';
-import { UsersService } from 'src/modules/users/users.service';
+import { CreateUserDto } from '../users/dto/createUser.dto';
+import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { config } from 'dotenv';
 config();

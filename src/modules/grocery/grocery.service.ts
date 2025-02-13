@@ -9,8 +9,8 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UpdateGroceryItemDto } from 'src/modules/grocery/dto/UpdateGroceryItem.dto';
-import { Grocery } from 'src/modules/grocery/grocery.entity';
+import { UpdateGroceryItemDto } from './dto/UpdateGroceryItem.dto';
+import { Grocery } from './grocery.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()

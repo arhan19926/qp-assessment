@@ -9,11 +9,11 @@ import {
   Query,
 } from '@nestjs/common';
 import { GroceryService } from './grocery.service';
-import { CreateGroceryItemDto } from 'src/modules/grocery/dto/CreateGroceryItem.dto';
-import { UpdateGroceryItemDto } from 'src/modules/grocery/dto/UpdateGroceryItem.dto';
-import { ManageInventoryDto } from 'src/modules/grocery/dto/ ManageInventory.dto';
-import { Role } from 'src/modules/auth/decorators/Roles.decorator';
-import { ROLE } from 'src/modules/users/users.entity';
+import { CreateGroceryItemDto } from './dto/CreateGroceryItem.dto';
+import { UpdateGroceryItemDto } from './dto/UpdateGroceryItem.dto';
+import { ManageInventoryDto } from './dto/ ManageInventory.dto';
+import { Role } from '../auth/decorators/Roles.decorator';
+import { ROLE } from '../users/users.entity';
 
 @Controller('grocery')
 export class GroceryController {
