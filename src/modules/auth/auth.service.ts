@@ -78,7 +78,6 @@ export class AuthService {
   async validate(token: string) {
     try {
       console.log(`Inside AuthService method validate`);
-      console.log(token);
       const userToken = await this.jwtService.verifyAsync(token, {
         secret: process.env.JWT_SECRET,
       });
