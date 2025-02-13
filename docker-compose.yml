@@ -15,9 +15,9 @@ services:
     container_name: postgres-db
     restart: always
     environment:
-      POSTGRES_USER: neondb_owner
-      POSTGRES_PASSWORD: npg_3zPgZeHnLr2o
-      POSTGRES_DB: neondb
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+      POSTGRES_DB: ${PGDATABASE}
     ports:
       - "5432:5432"
     volumes:
